@@ -34,7 +34,7 @@ class SiteDailyStatistic(_PluginBase):
     # 插件图标
     plugin_icon = "Collabora_A.png"
     # 插件版本
-    plugin_version = "4.0"
+    plugin_version = "4.1"
     # 插件作者
     plugin_author = "Xiang"
     # 作者主页
@@ -54,6 +54,7 @@ class SiteDailyStatistic(_PluginBase):
     _onlyonce: bool = False
     _dashboard_type: str = "today"
     _notify_type = ""
+    _cron: str = ""
     _scheduler = None
 
     def init_plugin(self, config: dict = None):
@@ -70,6 +71,7 @@ class SiteDailyStatistic(_PluginBase):
             self._onlyonce = config.get("onlyonce")
             self._dashboard_type = config.get("dashboard_type") or "today"
             self._notify_type = config.get("notify_type") or ""
+            self._cron = config.get("cron") or ""
 
         if self._onlyonce:
             config["onlyonce"] = False
@@ -108,11 +110,13 @@ class SiteDailyStatistic(_PluginBase):
 
     def get_service(self) -> List[Dict[str, Any]]:
         ret_jobs = []
-        # 添加一个每日0点的统计任务，仅在该任务中保存数据
+        # 统计时间：用户配置的crontab表达式，未配置时默认每日23:59
+        cron_expr = self._cron if self._cron and self._cron.strip() else '59 23 * * *'
+        # 添加一个统计任务，仅在该任务中保存数据
         ret_jobs.append({
             "id": "SiteDailyStatistic00",
                 "name": "站点每日数据统计服务",
-                "trigger": CronTrigger.from_crontab('59 23 * * *'),
+                "trigger": CronTrigger.from_crontab(cron_expr),
                 "func": self.refresh_all_sites,
                 "kwargs": {}
         })
@@ -195,6 +199,28 @@ class SiteDailyStatistic(_PluginBase):
                                 },
                                 'content': [
                                     {
+                                        'component': 'VTextField',
+                                        'props': {
+                                            'model': 'cron',
+                                            'label': '统计时间',
+                                            'placeholder': '5位crontab表达式，如 59 23 * * *，留空默认每日23:59'
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        'component': 'VRow',
+                        'content': [
+                            {
+                                'component': 'VCol',
+                                'props': {
+                                    'cols': 12,
+                                    'md': 6
+                                },
+                                'content': [
+                                    {
                                         'component': 'VSelect',
                                         'props': {
                                             'model': 'notify_type',
@@ -215,7 +241,8 @@ class SiteDailyStatistic(_PluginBase):
         ], {
             "enabled": False,
             "onlyonce": False,
-            "dashboard_type": 'today'
+            "dashboard_type": 'today',
+            "cron": "59 23 * * *"
         }
 
     @eventmanager.register(EventType.SiteRefreshed)
