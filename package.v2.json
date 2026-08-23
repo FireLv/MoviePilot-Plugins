@@ -33,11 +33,12 @@
     "SiteDailyStatistic": {
         "name": "站点每日数据统计",
         "description": "自动统计和展示当天累计站点数据",
-        "version": "4.1",
+        "version": "4.2",
         "icon": "Collabora_A.png",
-        "author": "Xiang",
+        "author": "FireLv",
         "level": 1,
         "history": {
+            "v4.2": "仓库迁移至FireLv",
             "v4.1": "支持配置统计时间(crontab表达式)",
             "v4.0": "补全站点数据时仅处理已启用站点",
             "v3.8": "在刷新失败时以旧数据填充",

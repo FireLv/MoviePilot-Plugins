@@ -42,11 +42,11 @@ class SiteDailyStatistic(_PluginBase):
     # 插件图标
     plugin_icon = "Collabora_A.png"
     # 插件版本
-    plugin_version = "3.4"
+    plugin_version = "3.5"
     # 插件作者
-    plugin_author = "Xiang"
+    plugin_author = "FireLv"
     # 作者主页
-    author_url = "https://github.com/xiangt920"
+    author_url = "https://github.com/FireLv"
     # 插件配置项ID前缀
     plugin_config_prefix = "sitedailystatistic_"
     # 加载顺序
