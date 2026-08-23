@@ -28,7 +28,7 @@
         "v2": true
     },
     "SiteDailyStatistic": {
-        "name": "站点每日数据统计",
+        "name": "站点数据统计",
         "description": "自动统计和展示当天累计站点数据",
         "version": "3.5",
         "icon": "Collabora_A.png",

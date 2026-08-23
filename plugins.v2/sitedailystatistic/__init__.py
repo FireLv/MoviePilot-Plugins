@@ -28,7 +28,7 @@ lock = Lock()
 
 class SiteDailyStatistic(_PluginBase):
     # 插件名称
-    plugin_name = "站点每日数据统计"
+    plugin_name = "站点数据统计"
     # 插件描述
     plugin_desc = "站点统计数据图表及当天累计站点数据通知"
     # 插件图标
@@ -115,7 +115,7 @@ class SiteDailyStatistic(_PluginBase):
         # 添加一个统计任务，仅在该任务中保存数据
         ret_jobs.append({
             "id": "SiteDailyStatistic00",
-                "name": "站点每日数据统计服务",
+                "name": "站点数据统计服务",
                 "trigger": CronTrigger.from_crontab(cron_expr),
                 "func": self.refresh_all_sites,
                 "kwargs": {}

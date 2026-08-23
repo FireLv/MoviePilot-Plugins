@@ -36,7 +36,7 @@ lock = Lock()
 
 class SiteDailyStatistic(_PluginBase):
     # 插件名称
-    plugin_name = "站点每日数据统计"
+    plugin_name = "站点数据统计"
     # 插件描述
     plugin_desc = "自动统计和展示当天累计站点数据"
     # 插件图标
@@ -142,7 +142,7 @@ class SiteDailyStatistic(_PluginBase):
         return [{
             "cmd": "/site_daily_statistic",
             "event": EventType.PluginAction,
-            "desc": "站点每日数据统计",
+            "desc": "站点数据统计",
             "category": "站点",
             "data": {
                 "action": "site_daily_statistic"
@@ -182,7 +182,7 @@ class SiteDailyStatistic(_PluginBase):
         if self._enabled and self._cron:
             ret_jobs.append({
                 "id": "SiteDailyStatistic",
-                "name": "站点每日数据统计服务",
+                "name": "站点数据统计服务",
                 "trigger": CronTrigger.from_crontab(self._cron),
                 "func": self.refresh_all_site_data,
                 "kwargs": {}
@@ -197,7 +197,7 @@ class SiteDailyStatistic(_PluginBase):
             for trigger in triggers:
                 ret_jobs.append({
                     "id": f"SiteDailyStatistic|{trigger.hour}:{trigger.minute}",
-                    "name": "站点每日数据统计服务",
+                    "name": "站点数据统计服务",
                     "trigger": "cron",
                     "func": self.refresh_all_site_data,
                     "kwargs": {
@@ -208,7 +208,7 @@ class SiteDailyStatistic(_PluginBase):
         # 添加一个每日0点的统计任务，仅在该任务中保存数据
         ret_jobs.append({
             "id": "SiteDailyStatistic00",
-                "name": "站点每日数据统计服务",
+                "name": "站点数据统计服务",
                 "trigger": CronTrigger.from_crontab('59 23 * * *'),
                 "func": self.refresh_and_save_all_site_date,
                 "kwargs": {}
