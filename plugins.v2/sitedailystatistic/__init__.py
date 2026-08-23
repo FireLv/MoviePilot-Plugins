@@ -34,7 +34,7 @@ class SiteDailyStatistic(_PluginBase):
     # 插件图标
     plugin_icon = "Collabora_A.png"
     # 插件版本
-    plugin_version = "4.2"
+    plugin_version = "4.3"
     # 插件作者
     plugin_author = "FireLv"
     # 作者主页
